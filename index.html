@@ -27,7 +27,14 @@ h1{font-size:1.9rem;margin:16px 0 2px;letter-spacing:.2px}
 .num{flex:0 0 52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:1.45rem;display:flex;align-items:center;justify-content:center}
 .ttl{font-size:1.2rem;font-weight:700;margin:0}
 .txt{margin:2px 0 0;color:var(--soft);font-size:.95rem;font-style:italic}
-audio{width:100%;height:48px}
+audio{display:none}
+.play{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;border:0;border-radius:14px;background:var(--accent);color:#fff;font:700 1.2rem Georgia,serif;cursor:pointer}
+.play:active{background:var(--accent-d)}
+.play .ic{font-size:1.1rem}
+.card.on .play{background:var(--accent-d)}
+.prog{height:6px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--sun)}
+.tip{font-size:.95rem;color:var(--soft);margin:0 0 14px}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:.95rem}
 .row a{color:var(--accent-d);min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:3px}
 .all{background:var(--accent);color:#fff;border-color:var(--accent-d)}
@@ -49,6 +56,7 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
     <b>Comment faire ?</b> Ouvrez le livre à la page de votre choix, puis appuyez sur la <b>même page</b> ci-dessous.
     Vous entendrez d’abord le <b>wolof</b>, un petit silence, puis le <b>français</b>.
   </div>
+  <p class="tip">Si vous n’entendez rien : montez le volume de votre téléphone et vérifiez qu’il n’est pas en mode silencieux.</p>
 
   <div class="bar">
     <label><input type="checkbox" id="auto"> Passer à la page suivante toute seule</label>
@@ -81,21 +89,27 @@ P.forEach(function(t,i){
   var n=i+1,id=("0"+n).slice(-2),f="audio/Mango_Mame_Page_"+id+".mp3";
   var s=document.createElement("section");s.className="card"+(doneSet[n]?" done":"");s.id="p"+n;
   s.innerHTML='<div class="top"><div class="num" aria-hidden="true">'+n+'</div><div><p class="ttl">Page '+n+'</p><p class="txt">'+t+'</p></div></div>'+
-   '<audio controls preload="none" src="'+f+'" aria-label="Écouter la page '+n+'"></audio>'+
-   '<div class="row"><span></span><a href="'+f+'" download>Télécharger</a></div>';
+   '<button type="button" class="play" aria-label="Écouter la page '+n+'"><span class="ic">▶</span> <span class="lb">Écouter la page '+n+'</span></button>'+
+   '<div class="prog" aria-hidden="true"><i></i></div>'+
+   '<audio preload="none" src="'+f+'"></audio>'+
+   '<div class="row"><span></span><a href="'+f+'" download>Garder cet audio sur mon téléphone</a></div>';
+  s.querySelector(".play").addEventListener("click",function(){var a=s.querySelector("audio");if(a.paused){a.play().catch(function(){})}else{a.pause()}});
   list.appendChild(s);
 });
 var cards=[].slice.call(document.querySelectorAll(".card"));
 auto.checked=store("mm_auto")==="1";
 auto.addEventListener("change",function(){store("mm_auto",auto.checked?"1":"0")});
+function ui(a,playing){var c=a.closest(".card");c.querySelector(".ic").textContent=playing?"❚❚":"▶";c.querySelector(".lb").textContent=playing?"Pause":(a.currentTime>1?"Reprendre":"Écouter la page "+c.id.slice(1))}
 document.addEventListener("play",function(e){
   var a=e.target;if(a.tagName!=="AUDIO")return;
   [].forEach.call(document.querySelectorAll("audio"),function(o){if(o!==a)o.pause()});
-  cards.forEach(function(c){c.classList.remove("on")});a.closest(".card").classList.add("on");
+  cards.forEach(function(c){c.classList.remove("on")});a.closest(".card").classList.add("on");ui(a,true);
 },true);
+document.addEventListener("pause",function(e){var a=e.target;if(a.tagName==="AUDIO"&&!a.ended)ui(a,false)},true);
+document.addEventListener("timeupdate",function(e){var a=e.target;if(a.tagName!=="AUDIO"||!a.duration)return;a.closest(".card").querySelector(".prog i").style.width=(a.currentTime/a.duration*100)+"%"},true);
 document.addEventListener("ended",function(e){
   var a=e.target;if(a.tagName!=="AUDIO")return;
-  var c=a.closest(".card");c.classList.remove("on");
+  var c=a.closest(".card");c.classList.remove("on");c.querySelector(".ic").textContent="▶";c.querySelector(".lb").textContent="Réécouter la page "+c.id.slice(1);c.querySelector(".prog i").style.width="0";
   if(c.id&&c.id.charAt(0)==="p"){var n=+c.id.slice(1);doneSet[n]=1;c.classList.add("done");try{store("mm_done",JSON.stringify(doneSet))}catch(x){}
     if(auto.checked){var nx=document.getElementById("p"+(n+1));if(nx){nx.scrollIntoView({behavior:"smooth",block:"start"});nx.querySelector("audio").play().catch(function(){})}}}
 },true);
