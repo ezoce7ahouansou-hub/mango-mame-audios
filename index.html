@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Mango Mame : les audios</title>
+<style>
+:root{--cream:#F5F0E3;--card:#FFFBF0;--ink:#3B2A1E;--soft:#6F5E50;--accent:#B5471C;--accent-d:#8F3611;--sun:#E8A93B;--line:#E3D8C0}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.45}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px}
+header{text-align:center;padding:28px 0 12px}
+header img{width:150px;height:auto;border-radius:10px;box-shadow:0 6px 18px rgba(59,42,30,.25)}
+h1{font-size:1.9rem;margin:16px 0 2px;letter-spacing:.2px}
+.sub{color:var(--accent);font-style:italic;font-size:1.15rem;margin:0}
+.help{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:18px 0;font-size:1.02rem}
+.help b{color:var(--accent-d)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;font-size:1rem}
+.bar label{display:flex;align-items:center;gap:10px;min-height:48px;cursor:pointer}
+.bar input{width:22px;height:22px;accent-color:var(--accent)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 14px 12px;margin:0 0 14px;scroll-margin-top:12px;transition:border-color .2s,box-shadow .2s}
+.card.on{border-color:var(--accent);box-shadow:0 4px 16px rgba(181,71,28,.18)}
+.card.done .num{background:var(--sun);color:var(--ink)}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.num{flex:0 0 52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:1.45rem;display:flex;align-items:center;justify-content:center}
+.ttl{font-size:1.2rem;font-weight:700;margin:0}
+.txt{margin:2px 0 0;color:var(--soft);font-size:.95rem;font-style:italic}
+audio{width:100%;height:48px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:.95rem}
+.row a{color:var(--accent-d);min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:3px}
+.all{background:var(--accent);color:#fff;border-color:var(--accent-d)}
+.all .num{background:#fff;color:var(--accent)}
+.all .txt{color:#FBE9D6}
+.all .row a{color:#fff}
+footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="couverture.jpg" alt="Couverture du livre Mango Mame" width="150" height="200">
+    <h1>Mango Mame</h1>
+    <p class="sub">La mangue de Mame</p>
+  </header>
+
+  <div class="help">
+    <b>Comment faire ?</b> Ouvrez le livre à la page de votre choix, puis appuyez sur la <b>même page</b> ci-dessous.
+    Vous entendrez d’abord le <b>wolof</b>, un petit silence, puis le <b>français</b>.
+  </div>
+
+  <div class="bar">
+    <label><input type="checkbox" id="auto"> Passer à la page suivante toute seule</label>
+  </div>
+
+  <div id="list"></div>
+
+  <footer>© 2026 AHOUANSOU Ezoce · Conte bilingue wolof · français pour les enfants de 3 à 6 ans</footer>
+</div>
+
+<script>
+var P=[
+"Voici Kiné. Voici Mame, sa grand-mère.",
+"Kiné lève les yeux. Il y a une grosse mangue dans l’arbre.",
+"Le matin, Kiné court jusqu’à l’arbre.",
+"Le coq arrive et regarde la mangue.",
+"Le lendemain, Kiné court jusqu’à l’arbre.",
+"La chèvre arrive. Elle regarde la mangue.",
+"Kiné lève la main et tire la branche.",
+"Mame fait un câlin à Kiné.",
+"Le lendemain, un petit oiseau se pose dans l’arbre.",
+"Un autre matin, Kiné court jusqu’à l’arbre.",
+"La mangue tombe : « Pat ! »",
+"Kiné court vers Mame.",
+"Mame coupe la mangue en deux."];
+var list=document.getElementById("list"),auto=document.getElementById("auto");
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+var doneSet={};try{doneSet=JSON.parse(store("mm_done")||"{}")}catch(e){}
+P.forEach(function(t,i){
+  var n=i+1,id=("0"+n).slice(-2),f="audio/Mango_Mame_Page_"+id+".mp3";
+  var s=document.createElement("section");s.className="card"+(doneSet[n]?" done":"");s.id="p"+n;
+  s.innerHTML='<div class="top"><div class="num" aria-hidden="true">'+n+'</div><div><p class="ttl">Page '+n+'</p><p class="txt">'+t+'</p></div></div>'+
+   '<audio controls preload="none" src="'+f+'" aria-label="Écouter la page '+n+'"></audio>'+
+   '<div class="row"><span></span><a href="'+f+'" download>Télécharger</a></div>';
+  list.appendChild(s);
+});
+var cards=[].slice.call(document.querySelectorAll(".card"));
+auto.checked=store("mm_auto")==="1";
+auto.addEventListener("change",function(){store("mm_auto",auto.checked?"1":"0")});
+document.addEventListener("play",function(e){
+  var a=e.target;if(a.tagName!=="AUDIO")return;
+  [].forEach.call(document.querySelectorAll("audio"),function(o){if(o!==a)o.pause()});
+  cards.forEach(function(c){c.classList.remove("on")});a.closest(".card").classList.add("on");
+},true);
+document.addEventListener("ended",function(e){
+  var a=e.target;if(a.tagName!=="AUDIO")return;
+  var c=a.closest(".card");c.classList.remove("on");
+  if(c.id&&c.id.charAt(0)==="p"){var n=+c.id.slice(1);doneSet[n]=1;c.classList.add("done");try{store("mm_done",JSON.stringify(doneSet))}catch(x){}
+    if(auto.checked){var nx=document.getElementById("p"+(n+1));if(nx){nx.scrollIntoView({behavior:"smooth",block:"start"});nx.querySelector("audio").play().catch(function(){})}}}
+},true);
+</script>
+</body>
+</html>
