@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Mango Mame : les audios</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#B5471C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mango Mame">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
 <style>
 :root{--cream:#F5F0E3;--card:#FFFBF0;--ink:#3B2A1E;--soft:#6F5E50;--accent:#B5471C;--accent-d:#8F3611;--sun:#E8A93B;--line:#E3D8C0}
 *{box-sizing:border-box}
@@ -37,6 +45,12 @@ audio{display:none}
 .prog{height:6px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden}
 .prog i{display:block;height:100%;width:0;background:var(--sun)}
 .tip{font-size:.95rem;color:var(--soft);margin:0 0 14px}
+.inst{display:none;background:#FFF3D6;border:2px solid var(--sun);border-radius:14px;padding:14px 16px;margin:0 0 14px;font-size:1.02rem}
+.inst.show{display:block}
+.inst p{margin:0 0 10px}
+.inst .go{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:14px;background:var(--ink);color:#fff;font:700 1.1rem Georgia,serif;cursor:pointer}
+.inst ol{margin:6px 0 8px;padding-left:22px}
+.inst .later{background:none;border:0;color:var(--soft);text-decoration:underline;font:.95rem Georgia,serif;min-height:44px;cursor:pointer;display:block;margin:6px auto 0}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:.95rem}
 .row a{color:var(--accent-d);min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:3px}
 .all{background:var(--accent);color:#fff;border-color:var(--accent-d)}
@@ -64,6 +78,22 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
   </div>
   <p class="tip">Si vous n’entendez rien : montez le volume de votre téléphone et vérifiez qu’il n’est pas en mode silencieux.</p>
 
+  <div class="inst" id="inst-android">
+    <p><b>Gardez Mango Mame sur votre téléphone.</b> Plus besoin de chercher le lien, et les audios marchent même sans internet.</p>
+    <button type="button" class="go" id="btn-install">📲 Installer sur mon téléphone</button>
+    <button type="button" class="later" data-later>Plus tard</button>
+  </div>
+  <div class="inst" id="inst-ios">
+    <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
+    <ol>
+      <li>Touchez le bouton <b>Partager</b> (le carré avec une flèche vers le haut), en bas de l’écran.</li>
+      <li>Descendez, puis touchez <b>« Sur l’écran d’accueil »</b>.</li>
+      <li>Touchez <b>Ajouter</b>.</li>
+    </ol>
+    <p>Une icône Mango Mame apparaît, comme une application.</p>
+    <button type="button" class="later" data-later>J’ai compris</button>
+  </div>
+
   <div class="bar">
     <label><input type="checkbox" id="auto"> Passer à la page suivante toute seule</label>
   </div>
@@ -88,6 +118,20 @@ var P=[
 "La mangue tombe : « Pat ! »",
 "Kiné court vers Mame.",
 "Mame coupe la mangue en deux."];
+/* Application : mode hors-ligne + invitation à l'installer */
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+(function(){
+  var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+  var ua=navigator.userAgent,isIOS=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  var android=document.getElementById("inst-android"),ios=document.getElementById("inst-ios"),dp=null,hidden=false;
+  try{hidden=sessionStorage.getItem("mm_inst_hide")==="1"}catch(e){}
+  if(standalone||hidden)return;
+  window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;android.classList.add("show")});
+  window.addEventListener("appinstalled",function(){android.classList.remove("show")});
+  if(isIOS&&/Safari/.test(ua)&&!/CriOS|FxiOS|EdgiOS/.test(ua))ios.classList.add("show");
+  document.getElementById("btn-install").addEventListener("click",function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;android.classList.remove("show")})});
+  [].forEach.call(document.querySelectorAll("[data-later]"),function(b){b.addEventListener("click",function(){android.classList.remove("show");ios.classList.remove("show");try{sessionStorage.setItem("mm_inst_hide","1")}catch(e){}})});
+})();
 var list=document.getElementById("list"),auto=document.getElementById("auto");
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
 var doneSet={};try{doneSet=JSON.parse(store("mm_done")||"{}")}catch(e){}
