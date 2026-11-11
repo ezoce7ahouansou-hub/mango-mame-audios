@@ -53,6 +53,22 @@ audio{display:none}
 .inst .go{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:14px;background:var(--ink);color:#fff;font:700 1.1rem Georgia,serif;cursor:pointer}
 .inst ol{margin:6px 0 8px;padding-left:22px}
 .inst .later{background:none;border:0;color:var(--soft);text-decoration:underline;font:.95rem Georgia,serif;min-height:44px;cursor:pointer;display:block;margin:6px auto 0}
+.guide{display:none}
+.guide.show{display:block}
+.reopen{display:none;order:-2;width:100%;min-height:52px;margin:0 0 14px;border:2px solid var(--sun);border-radius:14px;background:#FFF3D6;color:var(--ink);font:700 1rem Georgia,serif;cursor:pointer}
+.reopen.show{display:block}
+.bounce{display:block;text-align:center;font-size:2rem;line-height:1;color:var(--accent);animation:bdown 1s ease-in-out infinite}
+.arrow{display:none;position:fixed;z-index:50;flex-direction:column;align-items:center;gap:2px;max-width:230px;text-align:center;cursor:pointer}
+.arrow.show{display:flex}
+.arrow .bub{background:var(--accent);color:#fff;font:700 1rem Georgia,serif;padding:8px 12px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.arrow .ar{font-size:2.6rem;line-height:1;color:var(--accent);text-shadow:0 0 0 #fff,0 2px 6px rgba(255,255,255,.9)}
+.arrow.top{top:4px;right:8px}
+.arrow.top .ar{animation:bup 1s ease-in-out infinite}
+.arrow.bottom{bottom:calc(4px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%)}
+.arrow.bottom .ar{animation:bdown 1s ease-in-out infinite}
+@keyframes bup{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes bdown{0%,100%{transform:translateY(0)}50%{transform:translateY(12px)}}
+@media (prefers-reduced-motion:reduce){.bounce,.arrow .ar{animation:none}}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:.95rem}
 .row a{color:var(--accent-d);min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:3px}
 .all{background:var(--accent);color:#fff;border-color:var(--accent-d)}
@@ -80,30 +96,35 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
   </div>
   <p class="tip">Si vous n’entendez rien : montez le volume de votre téléphone et vérifiez qu’il n’est pas en mode silencieux.</p>
 
-  <div class="inst" id="inst-android">
-    <p><b>Gardez Mango Mame sur votre téléphone.</b> Plus besoin de chercher le lien, et les audios marchent même sans internet.</p>
-    <button type="button" class="go" id="btn-install">📲 Installer sur mon téléphone</button>
-    <button type="button" class="later" data-later>Plus tard</button>
-  </div>
-  <div class="inst" id="inst-android-manual">
-    <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
-    <ol>
-      <li>Touchez les <b>trois petits points ⋮</b> en haut à droite de Chrome.</li>
-      <li>Touchez <b>« Installer l’application »</b> (ou <b>« Ajouter à l’écran d’accueil »</b>).</li>
-      <li>Touchez <b>Installer</b>.</li>
-    </ol>
-    <p>Une icône Mango Mame apparaît, comme une application.</p>
-    <button type="button" class="later" data-later>J’ai compris</button>
-  </div>
-  <div class="inst" id="inst-ios">
-    <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
-    <ol>
-      <li>Touchez le bouton <b>Partager</b> (le carré avec une flèche vers le haut), en bas de l’écran.</li>
-      <li>Descendez, puis touchez <b>« Sur l’écran d’accueil »</b>.</li>
-      <li>Touchez <b>Ajouter</b>.</li>
-    </ol>
-    <p>Une icône Mango Mame apparaît, comme une application.</p>
-    <button type="button" class="later" data-later>J’ai compris</button>
+  <button type="button" class="reopen" id="reopen">📲 Comment mettre Mango Mame sur mon écran ?</button>
+  <div class="inst" id="inst">
+    <div class="guide" id="g-btn">
+      <p><b>Gardez Mango Mame sur votre téléphone.</b> Plus besoin de chercher le lien, et les audios marchent même sans internet.</p>
+      <span class="bounce" aria-hidden="true">▼</span>
+      <button type="button" class="go" id="btn-install">📲 Installer sur mon téléphone</button>
+    </div>
+    <div class="guide" id="g-android">
+      <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
+      <ol>
+        <li>Touchez les <b>trois petits points ⋮</b> en haut à droite (suivez la flèche).</li>
+        <li>Touchez <b>« Installer l’application »</b> (ou <b>« Ajouter à l’écran d’accueil »</b>).</li>
+        <li>Touchez <b>Installer</b>.</li>
+      </ol>
+      <p>Une icône Mango Mame apparaît, comme une application.</p>
+    </div>
+    <div class="guide" id="g-ios">
+      <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
+      <ol>
+        <li>Touchez le bouton <b>Partager</b> (le carré avec une flèche vers le haut), en bas de l’écran (suivez la flèche).</li>
+        <li>Descendez, puis touchez <b>« Sur l’écran d’accueil »</b>.</li>
+        <li>Touchez <b>Ajouter</b>.</li>
+      </ol>
+      <p>Une icône Mango Mame apparaît, comme une application.</p>
+    </div>
+    <div class="guide" id="g-other">
+      <p><b>Pour mettre Mango Mame sur votre écran,</b> ouvrez cette page dans <b>Safari</b> (iPhone) ou dans <b>Chrome</b> (Android), pas dans WhatsApp ou une autre application. Copiez le lien, puis collez-le dans Safari ou Chrome.</p>
+    </div>
+    <button type="button" class="later" id="inst-close">J’ai compris</button>
   </div>
 
   <div class="bar">
@@ -112,8 +133,11 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
 
   <div id="list"></div>
 
-  <footer>© 2026 AHOUANSOU Ezoce · Conte bilingue wolof · français pour les enfants de 3 à 6 ans · v6</footer>
+  <footer>© 2026 AHOUANSOU Ezoce · Conte bilingue wolof · français pour les enfants de 3 à 6 ans · v7</footer>
 </div>
+
+<div class="arrow top" id="arrow-top" aria-hidden="true"><span class="ar">▲</span><span class="bub">① Touchez ici les 3 points ⋮</span></div>
+<div class="arrow bottom" id="arrow-bottom" aria-hidden="true"><span class="bub">① Touchez ici « Partager »</span><span class="ar">▼</span></div>
 
 <script>
 var P=[
@@ -134,18 +158,32 @@ var P=[
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 (function(){
   var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-  var ua=navigator.userAgent,isIOS=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-  var android=document.getElementById("inst-android"),ios=document.getElementById("inst-ios"),dp=null,hidden=false;
-  try{hidden=sessionStorage.getItem("mm_inst_hide")==="1"}catch(e){}
-  if(standalone||hidden)return;
-  var manual=document.getElementById("inst-android-manual");
-  window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;manual.classList.remove("show");android.classList.add("show")});
-  window.addEventListener("appinstalled",function(){android.classList.remove("show");manual.classList.remove("show")});
-  /* Chrome ne propose pas toujours l'installation tout seul : au bout de 3 s, on affiche les étapes à la main */
-  if(/Android/.test(ua)){setTimeout(function(){if(!dp&&!android.classList.contains("show")&&!hidden)manual.classList.add("show")},3000)}
-  if(isIOS&&/Safari/.test(ua)&&!/CriOS|FxiOS|EdgiOS/.test(ua))ios.classList.add("show");
-  document.getElementById("btn-install").addEventListener("click",function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;android.classList.remove("show")})});
-  [].forEach.call(document.querySelectorAll("[data-later]"),function(b){b.addEventListener("click",function(){android.classList.remove("show");manual.classList.remove("show");hidden=true;ios.classList.remove("show");try{sessionStorage.setItem("mm_inst_hide","1")}catch(e){}})});
+  if(standalone)return;
+  var ua=navigator.userAgent,touch=navigator.maxTouchPoints>1;
+  var isIPad=/iPad/.test(ua)||(navigator.platform==="MacIntel"&&touch);
+  var isIOS=/iPhone|iPod/.test(ua)||isIPad;
+  var mobile=isIOS||/Android|Mobile/i.test(ua)||(matchMedia("(pointer:coarse)").matches&&innerWidth<900);
+  if(!mobile)return;   /* sur ordinateur : rien à installer */
+  var inApp=/FBAN|FBAV|Instagram|Line\/|; wv\)|MicroMessenger|Snapchat|TikTok/i.test(ua);
+  var safari=isIOS&&/Safari/.test(ua)&&!/CriOS|FxiOS|EdgiOS|OPiOS|GSA/.test(ua)&&!inApp;
+  var $=function(id){return document.getElementById(id)};
+  var inst=$("inst"),reopen=$("reopen"),gb=$("g-btn"),ga=$("g-android"),gi=$("g-ios"),go=$("g-other"),at=$("arrow-top"),ab=$("arrow-bottom"),dp=null;
+  function hideAll(){[gb,ga,gi,go,at,ab].forEach(function(e){e.classList.remove("show")})}
+  function openGuide(){
+    hideAll();inst.classList.add("show");reopen.classList.remove("show");
+    if(dp){gb.classList.add("show");return}
+    if(isIOS){if(safari){gi.classList.add("show");(isIPad?at:ab).classList.add("show")}else go.classList.add("show")}
+    else if(inApp){go.classList.add("show")}
+    else{ga.classList.add("show");at.classList.add("show")}
+  }
+  function closeGuide(){hideAll();inst.classList.remove("show");reopen.classList.add("show")}
+  window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;openGuide()});
+  window.addEventListener("appinstalled",function(){hideAll();inst.classList.remove("show");reopen.classList.remove("show")});
+  $("btn-install").addEventListener("click",function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;closeGuide()})});
+  $("inst-close").addEventListener("click",closeGuide);
+  reopen.addEventListener("click",openGuide);
+  at.addEventListener("click",closeGuide);ab.addEventListener("click",closeGuide);
+  openGuide();   /* toujours visible au départ : plus aucun réglage mémorisé qui pourrait le cacher */
 })();
 var list=document.getElementById("list"),auto=document.getElementById("auto");
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
