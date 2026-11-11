@@ -1,0 +1,22 @@
+{
+  "name": "Mango Mame : les audios",
+  "short_name": "Mango Mame",
+  "description": "Les audios du conte Mango Mame, en wolof puis en français, page par page.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F0E3",
+  "theme_color": "#B5471C",
+  "handle_links": "preferred",
+  "launch_handler": { "client_mode": "navigate-existing" },
+  "related_applications": [
+    { "platform": "webapp", "url": "https://ezoce7ahouansou-hub.github.io/mango-mame-audios/manifest.webmanifest" }
+  ],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
