@@ -1,5 +1,5 @@
 // Mango Mame : mode hors-ligne. Change VERSION à chaque mise à jour des fichiers.
-var VERSION = "mango-audios-v7";
+var VERSION = "mango-audios-v8";
 var OLD = ["mm-v1", "mm-v2", "mm-v3"];  // anciennes versions de CE site uniquement (les autres sites github.io partagent le même espace de cache)
 var FILES = ["./", "index.html", "couverture.jpg", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 for (var i = 1; i <= 13; i++) FILES.push("audio/Mango_Mame_Page_" + ("0" + i).slice(-2) + ".mp3");
