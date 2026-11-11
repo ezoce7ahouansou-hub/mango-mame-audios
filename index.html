@@ -83,6 +83,16 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
     <button type="button" class="go" id="btn-install">📲 Installer sur mon téléphone</button>
     <button type="button" class="later" data-later>Plus tard</button>
   </div>
+  <div class="inst" id="inst-android-manual">
+    <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
+    <ol>
+      <li>Touchez les <b>trois petits points ⋮</b> en haut à droite de Chrome.</li>
+      <li>Touchez <b>« Installer l’application »</b> (ou <b>« Ajouter à l’écran d’accueil »</b>).</li>
+      <li>Touchez <b>Installer</b>.</li>
+    </ol>
+    <p>Une icône Mango Mame apparaît, comme une application.</p>
+    <button type="button" class="later" data-later>J’ai compris</button>
+  </div>
   <div class="inst" id="inst-ios">
     <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
     <ol>
@@ -100,7 +110,7 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
 
   <div id="list"></div>
 
-  <footer>© 2026 AHOUANSOU Ezoce · Conte bilingue wolof · français pour les enfants de 3 à 6 ans · v4</footer>
+  <footer>© 2026 AHOUANSOU Ezoce · Conte bilingue wolof · français pour les enfants de 3 à 6 ans · v5</footer>
 </div>
 
 <script>
@@ -126,11 +136,14 @@ if("serviceWorker" in navigator){window.addEventListener("load",function(){navig
   var android=document.getElementById("inst-android"),ios=document.getElementById("inst-ios"),dp=null,hidden=false;
   try{hidden=sessionStorage.getItem("mm_inst_hide")==="1"}catch(e){}
   if(standalone||hidden)return;
-  window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;android.classList.add("show")});
-  window.addEventListener("appinstalled",function(){android.classList.remove("show")});
+  var manual=document.getElementById("inst-android-manual");
+  window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;manual.classList.remove("show");android.classList.add("show")});
+  window.addEventListener("appinstalled",function(){android.classList.remove("show");manual.classList.remove("show")});
+  /* Chrome ne propose pas toujours l'installation tout seul : au bout de 3 s, on affiche les étapes à la main */
+  if(/Android/.test(ua)){setTimeout(function(){if(!dp&&!android.classList.contains("show")&&!hidden)manual.classList.add("show")},3000)}
   if(isIOS&&/Safari/.test(ua)&&!/CriOS|FxiOS|EdgiOS/.test(ua))ios.classList.add("show");
   document.getElementById("btn-install").addEventListener("click",function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;android.classList.remove("show")})});
-  [].forEach.call(document.querySelectorAll("[data-later]"),function(b){b.addEventListener("click",function(){android.classList.remove("show");ios.classList.remove("show");try{sessionStorage.setItem("mm_inst_hide","1")}catch(e){}})});
+  [].forEach.call(document.querySelectorAll("[data-later]"),function(b){b.addEventListener("click",function(){android.classList.remove("show");manual.classList.remove("show");hidden=true;ios.classList.remove("show");try{sessionStorage.setItem("mm_inst_hide","1")}catch(e){}})});
 })();
 var list=document.getElementById("list"),auto=document.getElementById("auto");
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}

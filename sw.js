@@ -1,5 +1,5 @@
 // Mango Mame : mode hors-ligne. Change VERSION à chaque mise à jour des fichiers.
-var VERSION = "mango-audios-v4";
+var VERSION = "mango-audios-v5";
 var OLD = ["mm-v1", "mm-v2", "mm-v3"];  // anciennes versions de CE site uniquement (les autres sites github.io partagent le même espace de cache)
 var FILES = ["./", "index.html", "couverture.jpg", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 for (var i = 1; i <= 13; i++) FILES.push("audio/Mango_Mame_Page_" + ("0" + i).slice(-2) + ".mp3");
@@ -32,6 +32,13 @@ function rangeResponse(req, res) {
 self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET" || new URL(req.url).origin !== location.origin) return;
+  if (req.mode === "navigate") {  // la page elle-même : toujours la version la plus récente si internet, sinon la copie gardée
+    e.respondWith(fetch(req).then(function (net) {
+      if (net && net.status === 200) { var cp = net.clone(); caches.open(VERSION).then(function (c) { c.put("index.html", cp); }); }
+      return net;
+    }).catch(function () { return caches.open(VERSION).then(function (c) { return c.match("index.html"); }); }));
+    return;
+  }
   e.respondWith(caches.open(VERSION).then(function (c) {
     return c.match(req, { ignoreSearch: true, ignoreVary: true }).then(function (hit) {
       if (hit) return rangeResponse(req, hit);
