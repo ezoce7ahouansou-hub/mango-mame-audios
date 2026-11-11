@@ -5,22 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Mango Mame : les audios</title>
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#B5471C">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Mango Mame">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" href="icons/icon-192.png">
 <style>
 :root{--cream:#F5F0E3;--card:#FFFBF0;--ink:#3B2A1E;--soft:#6F5E50;--accent:#B5471C;--accent-d:#8F3611;--sun:#E8A93B;--line:#E3D8C0}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.45}
-.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px;display:flex;flex-direction:column}
-header{order:-3}
-.inst{order:-2}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px}
 header{text-align:center;padding:28px 0 12px}
 header img{width:150px;height:auto;border-radius:10px;box-shadow:0 6px 18px rgba(59,42,30,.25)}
 h1{font-size:1.9rem;margin:16px 0 2px;letter-spacing:.2px}
@@ -47,48 +37,12 @@ audio{display:none}
 .prog{height:6px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden}
 .prog i{display:block;height:100%;width:0;background:var(--sun)}
 .tip{font-size:.95rem;color:var(--soft);margin:0 0 14px}
-.inst{display:none;background:#FFF3D6;border:2px solid var(--sun);border-radius:14px;padding:14px 16px;margin:0 0 14px;font-size:1.02rem}
-.inst.show{display:block}
-.inst p{margin:0 0 10px}
-.inst .go{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:14px;background:var(--ink);color:#fff;font:700 1.1rem Georgia,serif;cursor:pointer}
-.inst ol{margin:6px 0 8px;padding-left:22px}
-.inst .later{background:none;border:0;color:var(--soft);text-decoration:underline;font:.95rem Georgia,serif;min-height:44px;cursor:pointer;display:block;margin:6px auto 0}
-.guide{display:none}
-.guide.show{display:block}
-.reopen{display:none;order:-2;width:100%;min-height:52px;margin:0 0 14px;border:2px solid var(--sun);border-radius:14px;background:#FFF3D6;color:var(--ink);font:700 1rem Georgia,serif;cursor:pointer}
-.reopen.show{display:block}
-.bounce{display:block;text-align:center;font-size:2rem;line-height:1;color:var(--accent);animation:bdown 1s ease-in-out infinite}
-.arrow{display:none;position:fixed;z-index:50;flex-direction:column;align-items:center;gap:2px;max-width:230px;text-align:center;cursor:pointer}
-.arrow.show{display:flex}
-.arrow .bub{background:var(--accent);color:#fff;font:700 1rem Georgia,serif;padding:8px 12px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
-.arrow .ar{font-size:2.6rem;line-height:1;color:var(--accent);text-shadow:0 0 0 #fff,0 2px 6px rgba(255,255,255,.9)}
-.arrow.top{top:4px;right:8px}
-.arrow.top .ar{animation:bup 1s ease-in-out infinite}
-.arrow.bottom{bottom:calc(4px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%)}
-.arrow.bottom .ar{animation:bdown 1s ease-in-out infinite}
-@keyframes bup{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@keyframes bdown{0%,100%{transform:translateY(0)}50%{transform:translateY(12px)}}
-@media (prefers-reduced-motion:reduce){.bounce,.arrow .ar{animation:none}}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:.95rem}
 .row a{color:var(--accent-d);min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:3px}
 .all{background:var(--accent);color:#fff;border-color:var(--accent-d)}
 .all .num{background:#fff;color:var(--accent)}
 .all .txt{color:#FBE9D6}
 .all .row a{color:#fff}
-.step{display:flex;gap:10px;margin:14px 0}
-.step .n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
-.step .t{flex:1;min-width:0}
-.ill{display:block;width:100%;height:auto;margin-top:8px;border-radius:10px;background:#fff;border:1px solid var(--line)}
-.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.1s ease-in-out infinite}
-.blink{animation:blink 1s ease-in-out infinite}
-.bobup{animation:bobup 1s ease-in-out infinite}
-.bobdn{animation:bobdn 1s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.45}}
-@keyframes blink{0%,100%{stroke-opacity:1}50%{stroke-opacity:.15}}
-@keyframes bobup{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes bobdn{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
-@media (prefers-reduced-motion:reduce){.pulse,.blink,.bobup,.bobdn{animation:none}}
-footer a{color:var(--accent-d)}
 footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
 </style>
 </head>
@@ -110,92 +64,14 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;margin-top:26px}
   </div>
   <p class="tip">Si vous n’entendez rien : montez le volume de votre téléphone et vérifiez qu’il n’est pas en mode silencieux.</p>
 
-  <button type="button" class="reopen" id="reopen">📲 Comment mettre Mango Mame sur mon écran ?</button>
-  <div class="inst" id="inst">
-    <div class="guide" id="g-btn">
-      <p><b>Gardez Mango Mame sur votre téléphone.</b> Plus besoin de chercher le lien, et les audios marchent même sans internet.</p>
-      <span class="bounce" aria-hidden="true">▼</span>
-      <button type="button" class="go" id="btn-install">📲 Installer sur mon téléphone</button>
-    </div>
-    <div class="guide" id="g-android">
-      <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
-      <div class="step"><div class="n">1</div><div class="t">Touchez les <b>trois petits points ⋮</b> en haut à droite de Chrome.
-        <svg class="ill" viewBox="0 0 320 76" role="img" aria-label="Barre de Chrome avec les trois points en haut à droite">
-          <rect x="1" y="1" width="318" height="48" rx="10" fill="#F4F0E6" stroke="#cfc4aa"/>
-          <rect x="12" y="11" width="236" height="28" rx="14" fill="#fff" stroke="#e0d6bd"/>
-          <text x="26" y="30" font-size="12" fill="#6F5E50" font-family="Georgia,serif">ezoce7ahouansou-hub.github.io</text>
-          <circle class="pulse" cx="292" cy="26" r="19" fill="none" stroke="#B5471C" stroke-width="3"/>
-          <circle cx="292" cy="17" r="2.8" fill="#3B2A1E"/><circle cx="292" cy="26" r="2.8" fill="#3B2A1E"/><circle cx="292" cy="35" r="2.8" fill="#3B2A1E"/>
-          <g class="bobup"><path d="M292 72 l-10 -12 h20 z" fill="#B5471C"/></g>
-        </svg></div></div>
-      <div class="step"><div class="n">2</div><div class="t">Touchez <b>« Installer l’application »</b> (ou <b>« Ajouter à l’écran d’accueil »</b>).
-        <svg class="ill" viewBox="0 0 320 120" role="img" aria-label="Menu de Chrome avec Installer l'application">
-          <rect x="30" y="4" width="260" height="112" rx="10" fill="#fff" stroke="#cfc4aa"/>
-          <text x="48" y="30" font-size="14" fill="#6F5E50" font-family="Georgia,serif">Nouvel onglet</text>
-          <rect class="blink" x="36" y="42" width="248" height="34" rx="8" fill="#FFE9C7" stroke="#B5471C" stroke-width="3"/>
-          <text x="48" y="64" font-size="14" font-weight="700" fill="#3B2A1E" font-family="Georgia,serif">Installer l’application</text>
-          <text x="48" y="102" font-size="14" fill="#6F5E50" font-family="Georgia,serif">Paramètres</text>
-        </svg></div></div>
-      <div class="step"><div class="n">3</div><div class="t">Touchez <b>Installer</b>.
-        <svg class="ill" viewBox="0 0 320 92" role="img" aria-label="Fenêtre avec le bouton Installer">
-          <rect x="30" y="4" width="260" height="84" rx="12" fill="#fff" stroke="#cfc4aa"/>
-          <text x="46" y="32" font-size="14" font-weight="700" fill="#3B2A1E" font-family="Georgia,serif">Installer l’application ?</text>
-          <text x="120" y="72" font-size="14" fill="#6F5E50" font-family="Georgia,serif">Annuler</text>
-          <rect class="blink" x="198" y="52" width="86" height="30" rx="15" fill="#B5471C" stroke="#E8A93B" stroke-width="3"/>
-          <text x="212" y="72" font-size="14" font-weight="700" fill="#fff" font-family="Georgia,serif">Installer</text>
-        </svg></div></div>
-      <p>Une icône Mango Mame apparaît sur votre écran, comme une application.</p>
-    </div>
-    <div class="guide" id="g-ios">
-      <p><b>Gardez Mango Mame sur votre écran d’accueil :</b></p>
-      <div class="step"><div class="n">1</div><div class="t">En bas de Safari, touchez le bouton <b>Partager</b> (un carré avec une flèche vers le haut). <i>Si la barre du bas a disparu, touchez le bas de l’écran pour la faire revenir.</i>
-        <svg class="ill" viewBox="0 0 320 96" role="img" aria-label="Barre du bas de Safari avec le bouton Partager au centre">
-          <g class="bobdn"><path d="M160 26 l-11 -13 h22 z" fill="#B5471C"/></g>
-          <rect x="1" y="30" width="318" height="62" rx="14" fill="#F4F0E6" stroke="#cfc4aa"/>
-          <path d="M40 61 l-8 8 l8 8" fill="none" stroke="#6F5E50" stroke-width="3" stroke-linecap="round"/>
-          <path d="M100 61 l8 8 l-8 8" fill="none" stroke="#6F5E50" stroke-width="3" stroke-linecap="round"/>
-          <circle class="pulse" cx="160" cy="68" r="23" fill="none" stroke="#B5471C" stroke-width="3"/>
-          <path d="M150 66 v14 h20 v-14" fill="none" stroke="#3B2A1E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M160 74 v-20 M153 61 l7 -7 l7 7" fill="none" stroke="#3B2A1E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-          <rect x="218" y="58" width="22" height="20" rx="3" fill="none" stroke="#6F5E50" stroke-width="2.6"/>
-          <rect x="274" y="58" width="20" height="20" rx="3" fill="none" stroke="#6F5E50" stroke-width="2.6"/>
-        </svg></div></div>
-      <div class="step"><div class="n">2</div><div class="t">Faites défiler la liste, puis touchez <b>« Sur l’écran d’accueil »</b>.
-        <svg class="ill" viewBox="0 0 320 130" role="img" aria-label="Liste de Partager avec Sur l'écran d'accueil">
-          <rect x="20" y="4" width="280" height="122" rx="12" fill="#fff" stroke="#cfc4aa"/>
-          <text x="40" y="32" font-size="14" fill="#6F5E50" font-family="Georgia,serif">Copier</text>
-          <rect class="blink" x="26" y="46" width="268" height="36" rx="8" fill="#FFE9C7" stroke="#B5471C" stroke-width="3"/>
-          <rect x="38" y="53" width="22" height="22" rx="5" fill="none" stroke="#3B2A1E" stroke-width="2.4"/><path d="M49 58 v12 M43 64 h12" stroke="#3B2A1E" stroke-width="2.4" stroke-linecap="round"/>
-          <text x="70" y="70" font-size="14" font-weight="700" fill="#3B2A1E" font-family="Georgia,serif">Sur l’écran d’accueil</text>
-          <text x="40" y="108" font-size="14" fill="#6F5E50" font-family="Georgia,serif">Imprimer</text>
-        </svg></div></div>
-      <div class="step"><div class="n">3</div><div class="t">Touchez <b>Ajouter</b>, en haut à droite.
-        <svg class="ill" viewBox="0 0 320 70" role="img" aria-label="Bouton Ajouter en haut à droite">
-          <rect x="1" y="1" width="318" height="64" rx="12" fill="#F4F0E6" stroke="#cfc4aa"/>
-          <text x="18" y="40" font-size="14" fill="#6F5E50" font-family="Georgia,serif">Annuler</text>
-          <text x="88" y="40" font-size="13" font-weight="700" fill="#3B2A1E" font-family="Georgia,serif">Écran d’accueil</text>
-          <rect class="blink" x="226" y="14" width="86" height="36" rx="18" fill="none" stroke="#B5471C" stroke-width="3"/>
-          <text x="241" y="38" font-size="14" font-weight="700" fill="#B5471C" font-family="Georgia,serif">Ajouter</text>
-        </svg></div></div>
-      <p>Une icône Mango Mame apparaît sur votre écran, comme une application.</p>
-    </div>
-    <div class="guide" id="g-other">
-      <p><b>Pour mettre Mango Mame sur votre écran,</b> ouvrez cette page dans <b>Safari</b> (iPhone) ou dans <b>Chrome</b> (Android), pas dans WhatsApp ou une autre application. Copiez le lien, puis collez-le dans Safari ou Chrome.</p>
-    </div>
-    <button type="button" class="later" id="inst-close">J’ai compris</button>
-  </div>
-
   <div class="bar">
     <label><input type="checkbox" id="auto"> Passer à la page suivante toute seule</label>
   </div>
 
   <div id="list"></div>
 
-  <footer>© 2026 AHOUANSOU Ezoce · Conte bilingue wolof · français pour les enfants de 3 à 6 ans · v8 · <a href="#" id="refresh">Actualiser la page</a></footer>
+  <footer>© 2026 AHOUANSOU Ezoce · Conte bilingue wolof · français pour les enfants de 3 à 6 ans</footer>
 </div>
-
-<div class="arrow top" id="arrow-top" aria-hidden="true"><span class="ar">▲</span><span class="bub">① Touchez ⋮</span></div>
-<div class="arrow bottom" id="arrow-bottom" aria-hidden="true"><span class="bub">① Touchez Partager</span><span class="ar">▼</span></div>
 
 <script>
 var P=[
@@ -212,41 +88,6 @@ var P=[
 "La mangue tombe : « Pat ! »",
 "Kiné court vers Mame.",
 "Mame coupe la mangue en deux."];
-/* Application : mode hors-ligne + invitation à l'installer */
-if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
-(function(){
-  var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-  if(standalone)return;
-  var ua=navigator.userAgent,touch=navigator.maxTouchPoints>1;
-  var iosLike=/iPhone|iPod|iPad/.test(ua)||(navigator.platform==="MacIntel"&&touch);var isIPad=iosLike&&Math.min(screen.width,screen.height)>=700;
-  var isIOS=iosLike;
-  var mobile=isIOS||/Android|Mobile/i.test(ua)||(matchMedia("(pointer:coarse)").matches&&innerWidth<900);
-  if(!mobile)return;   /* sur ordinateur : rien à installer */
-  var inApp=/FBAN|FBAV|Instagram|Line\/|; wv\)|MicroMessenger|Snapchat|TikTok/i.test(ua);
-  var safari=isIOS&&/Safari/.test(ua)&&!/CriOS|FxiOS|EdgiOS|OPiOS|GSA/.test(ua)&&!inApp;
-  var $=function(id){return document.getElementById(id)};
-  var inst=$("inst"),reopen=$("reopen"),gb=$("g-btn"),ga=$("g-android"),gi=$("g-ios"),go=$("g-other"),at=$("arrow-top"),ab=$("arrow-bottom"),dp=null;
-  function hideAll(){[gb,ga,gi,go,at,ab].forEach(function(e){e.classList.remove("show")})}
-  function openGuide(){
-    hideAll();inst.classList.add("show");reopen.classList.remove("show");
-    if(dp){gb.classList.add("show");return}
-    if(isIOS){if(safari){gi.classList.add("show");(isIPad?at:ab).classList.add("show")}else go.classList.add("show")}
-    else if(inApp){go.classList.add("show")}
-    else{ga.classList.add("show");at.classList.add("show")}
-  }
-  function closeGuide(){hideAll();inst.classList.remove("show");reopen.classList.add("show")}
-  window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;openGuide()});
-  window.addEventListener("appinstalled",function(){hideAll();inst.classList.remove("show");reopen.classList.remove("show")});
-  $("btn-install").addEventListener("click",function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;closeGuide()})});
-  $("inst-close").addEventListener("click",closeGuide);
-  reopen.addEventListener("click",openGuide);
-  at.addEventListener("click",closeGuide);ab.addEventListener("click",closeGuide);
-  openGuide();   /* toujours visible au départ : plus aucun réglage mémorisé qui pourrait le cacher */
-})();
-document.getElementById("refresh").addEventListener("click",function(ev){ev.preventDefault();
-  var done=function(){location.replace(location.pathname+"?maj="+Date.now())};
-  try{(navigator.serviceWorker?navigator.serviceWorker.getRegistrations():Promise.resolve([])).then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}).then(function(){return caches.keys()}).then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf("mango-audios-")===0||k.indexOf("mm-")===0}).map(function(k){return caches.delete(k)}))}).then(done,done)}catch(e){done()}
-});
 var list=document.getElementById("list"),auto=document.getElementById("auto");
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
 var doneSet={};try{doneSet=JSON.parse(store("mm_done")||"{}")}catch(e){}
